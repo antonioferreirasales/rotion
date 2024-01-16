@@ -25,7 +25,9 @@
     "@electron-toolkit/utils": "^2.0.0",
     "clsx": "^2.1.0",
     "cmdk": "^0.2.0",
-    "phosphor-react": "^1.4.1"
+    "electron-router-dom": "^1.0.5",
+    "phosphor-react": "^1.4.1",
+    "react-router-dom": "^6.21.2"
   },
   "devDependencies": {
     "@electron-toolkit/eslint-config-prettier": "^1.0.1",

@@ -1,6 +1,7 @@
 import { app, shell, BrowserWindow } from 'electron'
 import path from 'node:path'
 import { electronApp, optimizer, is } from '@electron-toolkit/utils'
+import { createFileRoute, createURLRoute } from 'electron-router-dom'
 import icon from '../../resources/icon.png'
 
 function createWindow(): void {
@@ -11,6 +12,8 @@ function createWindow(): void {
     autoHideMenuBar: true,
     backgroundColor: '#17141f',
     frame: false,
+    trafficLightPosition: process.platform === 'darwin' ? {x:20, y:20} : {x: 0, y: 0},
+    titleBarStyle: 'customButtonsOnHover',
     ...(process.platform === 'linux' ? { icon } : {}),
     webPreferences: {
       preload: path.join(__dirname, '../preload/index.js'),
@@ -27,12 +30,17 @@ function createWindow(): void {
     return { action: 'deny' }
   })
 
-  // HMR for renderer base on electron-vite cli.
-  // Load the remote URL for development or the local html file for production.
+  const devServerURL = createURLRoute(process.env['ELECTRON_RENDERER']!, 'main')
+
+  const fileRoute = createFileRoute(
+    path.join(__dirname, '../renderer/index.html'),
+    'main'
+  )
+
   if (is.dev && process.env['ELECTRON_RENDERER_URL']) {
-    mainWindow.loadURL(process.env['ELECTRON_RENDERER_URL'])
+    mainWindow.loadURL(devServerURL)
   } else {
-    mainWindow.loadFile(path.join(__dirname, '../renderer/index.html'))
+    mainWindow.loadFile(...fileRoute)
   }
 }
 

@@ -24,8 +24,8 @@ export function Sidebar() {
 
       <div
         className={clsx('region-drag h-14', {
-          block: isMacOS,
-          hidden: !isMacOS,
+          block: !isMacOS,
+          hidden: isMacOS,
         })}
       ></div>
 
