@@ -30,7 +30,10 @@ function createWindow(): void {
     return { action: 'deny' }
   })
 
-  const devServerURL = createURLRoute(process.env['ELECTRON_RENDERER']!, 'main')
+  const devServerURL = createURLRoute(
+    process.env.ELECTRON_RENDERER!,
+     'main'
+    )
 
   const fileRoute = createFileRoute(
     path.join(__dirname, '../renderer/index.html'),
